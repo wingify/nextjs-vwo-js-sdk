@@ -20,7 +20,7 @@ export const userStorageService = {
     }
   },
   setSettings: (settings) => {
-    localStorage.setItem('vwo-settings-expiry', +new Date()); // store current timestampp
+    localStorage.setItem('vwo-settings-expiry', (+new Date()).toString()); // store current timestampp
     localStorage.setItem('vwo-settings', settings);
   },
   get: (userId, campaignKey) => {

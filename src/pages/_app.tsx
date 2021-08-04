@@ -8,7 +8,7 @@ import { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "../lib/themeConfig"
 import { useEffect } from "react";
 import "balloon-css";
-import vwoSdk from "../../../vwo-node-sdk";
+import vwoSdk from "vwo-node-sdk";
 import { userStorageService, uuidv4 } from "../lib/vwo";
 
 export default function App({ Component, pageProps }: AppProps) {
