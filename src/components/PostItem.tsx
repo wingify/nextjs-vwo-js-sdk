@@ -2,20 +2,23 @@ import { PostContent } from "../lib/posts";
 import Date from "./Date";
 import Link from "next/link";
 import { parseISO } from "date-fns";
+import { withTheme } from 'styled-components';
 
 type Props = {
   post: PostContent;
+  theme: any;
 };
-export default function PostItem({ post }: Props) {
+
+function PostItem({ post, theme }: Props) {
   return (
-    <Link href={"/posts/" + post.slug}>
+    <Link href={"/posts/" + post.slug + location.search}>
       <a>
         <Date date={parseISO(post.date)} />
         <h2>{post.title}</h2>
         <style jsx>
           {`
             a {
-              color: #222;
+              color: ${theme.text};
               display: inline-block;
             }
             h2 {
@@ -28,3 +31,5 @@ export default function PostItem({ post }: Props) {
     </Link>
   );
 }
+
+export default withTheme(PostItem)

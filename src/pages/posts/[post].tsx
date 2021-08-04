@@ -12,6 +12,8 @@ import PostLayout from "../../components/PostLayout";
 import InstagramEmbed from "react-instagram-embed";
 import YouTube from "react-youtube";
 import { TwitterTweetEmbed } from "react-twitter-embed";
+import { useEffect } from "react";
+import { withTheme } from 'styled-components';
 
 export type Props = {
   title: string;
@@ -21,6 +23,7 @@ export type Props = {
   author: string;
   description?: string;
   source: MdxRemote.Source;
+  theme: any;
 };
 
 const components = { InstagramEmbed, YouTube, TwitterTweetEmbed };
@@ -30,7 +33,7 @@ const slugToPostContent = (postContents => {
   return hash;
 })(fetchPostContent());
 
-export default function Post({
+function Post({
   title,
   dateString,
   slug,
@@ -38,8 +41,23 @@ export default function Post({
   author,
   description = "",
   source,
+  theme
 }: Props) {
   const content = hydrate(source, { components })
+
+  useEffect(() => {
+    if (theme.type === 'dark') {
+      document.querySelector('body').style.height = 'initial';
+    } else {
+      document.querySelector('body').style.height = '100%';
+    }
+
+    return () => {
+      document.querySelector('body').style.height = '100%';
+    };
+
+  }, []);
+
   return (
     <PostLayout
       title={title}
@@ -53,6 +71,8 @@ export default function Post({
     </PostLayout>
   )
 }
+
+export default withTheme(Post);
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = fetchPostContent().map(it => "/posts/" + it.slug);
@@ -81,4 +101,3 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     },
   };
 };
-

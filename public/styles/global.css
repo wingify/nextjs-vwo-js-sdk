@@ -15,7 +15,7 @@ body {
 }
 
 a {
-  color: #9b9b9b;
+  color: #aaa;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -40,4 +40,8 @@ a:hover {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+.tooltip-medium-text {
+  --balloon-font-size: 20px;
 }

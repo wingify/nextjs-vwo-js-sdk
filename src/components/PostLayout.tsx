@@ -8,7 +8,7 @@ import BasicMeta from "./meta/BasicMeta";
 import JsonLdMeta from "./meta/JsonLdMeta";
 import OpenGraphMeta from "./meta/OpenGraphMeta";
 import TwitterCardMeta from "./meta/TwitterCardMeta";
-import { SocialList } from "./SocialList";
+import SocialList from "./SocialList";
 import TagButton from "./TagButton";
 import { getAuthor } from "../lib/authors";
 import { getTag } from "../lib/tags";
