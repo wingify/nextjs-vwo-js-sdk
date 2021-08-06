@@ -5,7 +5,8 @@ export const lightTheme = {
   text: '#363537',
   toggleBorder: '#FFF',
   background: '#363537',
-  type: 'light'
+  type: 'light',
+  vwoBoxBackground: '#eee'
 }
 
 export const darkTheme = {
@@ -13,7 +14,8 @@ export const darkTheme = {
   text: '#FAFAFA',
   toggleBorder: '#6B8096',
   background: '#999',
-  type: 'dark'
+  type: 'dark',
+  vwoBoxBackground: '#444'
 }
 
 export const GlobalStyles = createGlobalStyle`

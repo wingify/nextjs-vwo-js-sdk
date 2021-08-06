@@ -14,7 +14,7 @@ import { userStorageService, uuidv4 } from "../lib/vwo";
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState("light");
   const [isMounted, setIsMounted] = useState(false)
-  const [userId, setUserId ] = useState(uuidv4());
+  const [userId, setUserId ] = useState('');
 
   useEffect(() => {
     vwoSdk.getSettingsFile('60781', 'ea87170ad94079aa190bc7c9b85d26fb', userStorageService).then(settingsFile => {
@@ -23,15 +23,24 @@ export default function App({ Component, pageProps }: AppProps) {
         userStorageService
       })
 
+      const storedUserId = localStorage.getItem('vwo-userid');
       const userSearchParam = location.search.split('&').find(item => item.indexOf('userId') > -1);
       let finalUserId = userId;
 
       if (userSearchParam) {
         finalUserId = userSearchParam.split('=')[1];
         setUserId(finalUserId);
+      } else if (storedUserId) {
+        finalUserId = storedUserId || finalUserId;
+      } else {
+        finalUserId = uuidv4();
+        localStorage.setItem('vwo-userid', finalUserId);
       }
 
       const variationName = vwoClientInstance.activate('DEV_TEST_2', finalUserId);
+
+      pageProps.userId = finalUserId;
+      pageProps.variationName = variationName;
 
       if (variationName === 'Control') {
         setTheme('light');
@@ -49,9 +58,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={theme == 'light' ? lightTheme : darkTheme}>
       <GlobalStyles />
-      <p style={{'position': 'absolute', right: '10px'}}>
-        Visitor ID: <span className="tooltip-medium-text" data-balloon-length="medium" aria-label="Use userId as query-param for consistent bucketing. Eg: userId=a@b.com" data-balloon-pos="down-right" style={{color: '#007eff'}}>{userId}</span>
-        </p>
       {isMounted && <Component {...pageProps} />}
     </ThemeProvider>
   );

@@ -3,8 +3,14 @@ import BasicMeta from "../components/meta/BasicMeta";
 import OpenGraphMeta from "../components/meta/OpenGraphMeta";
 import TwitterCardMeta from "../components/meta/TwitterCardMeta";
 import SocialList from "../components/SocialList";
+import { withTheme } from 'styled-components';
 
-export default function Index() {
+function Index({ userId, variationName, theme }) {
+  function generateNewUser() {
+    localStorage.removeItem('vwo-userid');
+    location.reload();
+  }
+
   return (
     <Layout>
       <BasicMeta url={"/"} />
@@ -13,11 +19,27 @@ export default function Index() {
       <div className="container">
         <div>
           <h1>
-            Hi, We're Next.js, Netlify & VWO<span className="fancy">.</span>
+            Hi, We're Next.js & Netlify<span className="fancy">.</span>
           </h1>
           <span className="handle">@nextjs-netlify-blog</span>
           <h2>A blog template with Next.js and Netlify.</h2>
           <SocialList />
+
+          <div style={{
+            border: '1px solid #aaa',
+            padding: '10px',
+            marginTop: '35px',
+            background: theme.vwoBoxBackground,
+            borderRadius: '10px'
+          }}>
+            <p>A/B Testing Light(Control) and Dark(Variation-1) theme using VWO.</p>
+            <p>
+              User ID: <span className="tooltip-medium-text" data-balloon-length="medium" aria-label="Use userId as query-param for consistent bucketing. Eg: userId=a@b.com" data-balloon-pos="down-right" style={{color: '#007eff'}}>{userId}</span>
+              <button style={{marginLeft: '10px'}} onClick={generateNewUser}>Generate New User</button>
+            </p>
+            <p>User got: {variationName} </p>
+          </div>
+
         </div>
       </div>
       <style jsx>{`
@@ -60,3 +82,5 @@ export default function Index() {
     </Layout>
   );
 }
+
+export default withTheme(Index);
